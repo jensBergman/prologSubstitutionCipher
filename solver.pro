@@ -68,10 +68,6 @@ brute_force(Cipher,25, Result):-
 	
 brute_force(Cipher,Key, Result):-
 
-	% test a new key
-	NewKey is Key+1,
-	brute_force(Cipher,NewKey , CurrentResult),
-	
 		% try to decrypt the key
 	decrypt(Key, Cipher, Plain),
 	( 
@@ -79,7 +75,13 @@ brute_force(Cipher,Key, Result):-
 		word_exists(Plain) -> Result = [Key|CurrentResult];
 		% else 25 is not a possible key
 		Result = CurrentResult
-	).
+	),
+
+	% test a new key
+	NewKey is Key+1,
+	brute_force(Cipher,NewKey , CurrentResult).
+	
+
 	
 
 	

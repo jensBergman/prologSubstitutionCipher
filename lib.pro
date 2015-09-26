@@ -1,4 +1,8 @@
- %use: atom_codes(X, "abc"). to turn word to atom
+
+dappend(A-B, B-C, A-C).
+
+%LS=[1,2,3,4|LE],add(5,LS,LE,RS,RE), conv(6, LS-RE, Ans).
+
 
 % check if a letter is a valid input
  is_letter(Letter) :-
@@ -22,28 +26,14 @@ is_sign(Sign) :-
 		% else
 		false
 	).
-	
-%is_punctuation(Punctuation) :-
-% 	( 
-		% if space or !
-%		Punctuation < 34, Punctuation > 31 -> true;
-		% if '(' or ')'
-%		Punctuation < 42, Punctuation > 39 ->  true;
-		% if '.', '-' or ','
-%		Punctuation < 47, Punctuation > 43 -> true;
-		% if '?'
-%		Punctuation == 63 -> true;
-		% else
-%		false
-%	).
+
 	
 % check if the word exist by looking in the dictionary
 word_exists(Cipher) :-
 	atom_codes(X, Cipher),
 	atom_uplow(X, AtomCipher),
 	word(Word),
-	atom_codes(AtomWord, Word),
-	AtomWord == AtomCipher.
+	Word == AtomCipher,!.
 	
 first_word([32|T], Word):-
 	Word = [].
@@ -59,16 +49,7 @@ next_word([32|T], Word, Rest):-
 	Word = [], Rest = T.
 	
 next_word([H|T], Word, Rest):-
-	%(
-	%	is_sign(H) -> Rest = T, Word = [];
 		next_word(T, X, Rest), Word = [H|X].
-	%).
-	
-%remove_next_sign([H|T],Rest):-
-%	(
-%		not(is_sign(H)) -> Rest = T;		
-%		remove_next_sign(T, Rest)
-%	).
 
 remove_signs([H], Word):-
 	(

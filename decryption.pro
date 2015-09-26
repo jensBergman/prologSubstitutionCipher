@@ -1,37 +1,27 @@
 
-% test of encryption dec_solution(3, "All zebras", X).
-dec_solution(Key, Cipher, Sentence) :-
-	decrypt(Key, Cipher, Sentence),
-	string_list(Print, Sentence),
+% test of encryption dec_solution(3, "Doo cheudv", X).
+dec_solution(Key, Cipher, Result) :-
+	decrypt(Key, Cipher, Result),	
+	string_list(Print, Result),
 	write('Plain text is: '), write(Print).
-	
-	
-decrypt(Key, [H|[]], Result):- 
 
-	% check if the letter is a valid letter
-	%is_letter(H),
-	
-	% decrypt
-	Temp is H-Key,
-	% roll back the decrypt if necessary
-	dec_roll_back(H, Temp, X),
-	% insert the plain text instead of cipher text
-	Result = [X].
+% decrypt any text
+% input: Key: key to decrypt with, Cipher: encrypted text
+% output: Result: plain text (for the key Key)
+decrypt(Key, Cipher, Z):-
+	decrypt_dl(Key, Cipher, Z-Z, Result).
 
-decrypt(Key, [H|T], Result):-
+decrypt_dl(Key, [], Sentence-[], NewResult).
 
-	% check if the letter is a valid letter
-	%is_letter(H),
- 
-	% decrypt all text
-	decrypt(Key, T, Plain),
-	
+decrypt_dl(Key, [H|T], Sentence-Z, Result):-
 	% decrypt 
 	Temp is H-Key,
 	% roll back if necessary
-	dec_roll_back(H, Temp, X),
-	% insert the plain text instead of cipher text
-	Result = [X | Plain].
+	dec_roll_back(H, Temp, X),	
+	% append to the rest of plain text
+	dappend(Sentence-Z, [X|Z2]-Z2, NewResult),!,
+	% decrypt rest of the text text
+	decrypt_dl(Key, T, NewResult, Result).
 	
 % roll back decryption if over Z or z (or do nothing on space)	
 dec_roll_back(Cipher, Letter, Result) :-
