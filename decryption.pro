@@ -3,25 +3,27 @@
 dec_solution(Key, Cipher, Result) :-
 	decrypt(Key, Cipher, Result),	
 	string_list(Print, Result),
+	write('The cipher is: '), write(Cipher), nl,
+	write('The key is: '), write(Key), nl,
 	write('Plain text is: '), write(Print).
 
 % decrypt any text
 % input: Key: key to decrypt with, Cipher: encrypted text
 % output: Result: plain text (for the key Key)
-decrypt(Key, Cipher, Z):-
-	decrypt_dl(Key, Cipher, Z-Z, Result).
+decrypt(Key, Cipher, Result):-
+	decrypt_dl(Key, Cipher, Result-Result).
 
-decrypt_dl(Key, [], Sentence-[], NewResult).
+decrypt_dl(Key, [], Sentence-[]).
 
-decrypt_dl(Key, [H|T], Sentence-Z, Result):-
+decrypt_dl(Key, [H|T], Sentence-Z):-
 	% decrypt 
 	Temp is H-Key,
 	% roll back if necessary
 	dec_roll_back(H, Temp, X),	
 	% append to the rest of plain text
-	dappend(Sentence-Z, [X|Z2]-Z2, NewResult),!,
+	dappend(Sentence-Z, [X|Z2]-Z2, Result),!,
 	% decrypt rest of the text text
-	decrypt_dl(Key, T, NewResult, Result).
+	decrypt_dl(Key, T, Result).
 	
 % roll back decryption if over Z or z (or do nothing on space)	
 dec_roll_back(Cipher, Letter, Result) :-

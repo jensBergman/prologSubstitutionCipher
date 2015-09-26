@@ -9,9 +9,11 @@
 
 solv_solution(Cipher) :-
 	solver(Cipher, Key),
+	decrypt(Key, Cipher, Sentence),
+	string_list(Print, Sentence),
 	write('The cipher is: '), write(Cipher), nl,
 	write('The key is: '), write(Key), nl,
-	dec_solution(Key, Cipher, Sentence).
+	write('Plain text is: '), write(Print).
 
 solver(Cipher, Result):-
 	% get the first word (check possible solutions for one word
