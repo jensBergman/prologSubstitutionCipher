@@ -32,11 +32,11 @@ enc_roll_back(Letter, Cipher, Result) :-
 		
 	( 
 		% if space
-		is_sign(Letter) -> !, Result = Letter;
+		is_sign(Letter) -> Result = Letter;
 		% else is over Z
-		Cipher > 90, Letter =< 90 ->  !, Result is Cipher-26;
+		Cipher > 90, Letter =< 90 ->  Result is Cipher-26;
 		% else is over z
-		Cipher > 122, Letter =< 122 -> !, Result is Cipher-26;
+		Cipher > 122, Letter =< 122 -> Result is Cipher-26;
 		% else
 		Result = Cipher
 	).

@@ -12,11 +12,11 @@ add(A-B, B-C, A-C).
  is_letter(Letter) :-
  	( 
 		% if sign
-		is_sign(Letter) -> !,true;
+		is_sign(Letter) -> true;
 		% Capital letters
-		Letter < 91, Letter > 64 ->  !, true;
+		Letter < 91, Letter > 64 ->  true;
 		% small letters
-		Letter > 96, Letter < 123 -> !, true;
+		Letter > 96, Letter < 123 -> true;
 		% else
 		write("Text include invalid chars! This program only deals with letters, spaces and punctuation"), nl, false
 	).
@@ -25,9 +25,9 @@ add(A-B, B-C, A-C).
 is_sign(Sign) :-
  	( 
 		% signs
-		Sign < 65 -> !,true;
-		Sign > 122 ->  !,true;
-		Sign < 97, Sign > 90 -> !,true;
+		Sign < 65 -> true;
+		Sign > 122 ->  true;
+		Sign < 97, Sign > 90 -> true;
 		% else
 		false
 	).

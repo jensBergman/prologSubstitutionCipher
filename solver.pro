@@ -61,7 +61,7 @@ test_keys([], Cipher, Key):- !, fail.
 test_keys([H|T], Cipher, Key) :-
 	(
 		% if the key can decipher the whole text we are done
-		test_all(H, Cipher) ->  !,Key = H;
+		test_all(H, Cipher) ->  Key = H;
 		% else we have to check the other keys
 		test_keys(T, Cipher, Key) 
 	).
