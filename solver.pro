@@ -55,11 +55,8 @@ solver(Cipher, Result):-
 * Output: Key: final key that can be used to decipher the text
 */
 
-test_keys([], Cipher, Key):- 
-	% this is used becuase if the user initialize the Key, we must say that this is the wrong  
-	% key. Here we have checked all keys and all was the wrong solution.
-	!, var(Key). 
-	
+% Here we have checked all keys and all was the wrong solution.
+test_keys([], Cipher, Key):- !, fail.
 
 test_keys([H|T], Cipher, Key) :-
 	(
