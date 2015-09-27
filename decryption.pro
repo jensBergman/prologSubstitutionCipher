@@ -1,5 +1,17 @@
+/**
+* Author: Jens Bergman
+* Date: 2015-09-27
+* Course: ID2213, logic programming
+* Info: This file have all decryption procedures for a known key.
+*/
 
 % test of encryption dec_solution(3, "Doo cheudv", X).
+
+/** print out the result from decrypting a cipher with a known key
+* Desc: use this to get the plain text printed out
+* Input: Key: key to be used to decrypt, Cipher: this is the encoded text (char list)
+* Output: Result: plain text
+*/
 dec_solution(Key, Cipher, Result) :-
 	decrypt(Key, Cipher, Result),	
 	string_list(Print, Result),
@@ -21,7 +33,7 @@ decrypt_dl(Key, [H|T], Sentence-Z):-
 	% roll back if necessary
 	dec_roll_back(H, Temp, X),	
 	% append to the rest of plain text
-	dappend(Sentence-Z, [X|Z2]-Z2, Result),!,
+	add(Sentence-Z, [X|Z2]-Z2, Result),!,
 	% decrypt rest of the text text
 	decrypt_dl(Key, T, Result).
 	

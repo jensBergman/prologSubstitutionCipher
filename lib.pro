@@ -1,13 +1,17 @@
+/**
+* Author: Jens Bergman
+* Date: 2015-09-27
+* Course: ID2213, logic programming
+* Info: Library, this is a file with different procedures that can be used by the other files
+*/
 
-dappend(A-B, B-C, A-C).
-
-%LS=[1,2,3,4|LE],add(5,LS,LE,RS,RE), conv(6, LS-RE, Ans).
-
+% Appends two lists using difference lists
+add(A-B, B-C, A-C).
 
 % check if a letter is a valid input
  is_letter(Letter) :-
  	( 
-		% if valid
+		% if sign
 		is_sign(Letter) -> true;
 		% Capital letters
 		Letter < 91, Letter > 64 ->  true;
@@ -17,6 +21,7 @@ dappend(A-B, B-C, A-C).
 		write("Text include invalid chars! This program only deals with letters, spaces and punctuation"), nl, false
 	).
 
+% true if Sign is a sign
 is_sign(Sign) :-
  	( 
 		% signs
@@ -30,38 +35,38 @@ is_sign(Sign) :-
 	
 % check if the word exist by looking in the dictionary
 word_exists(Cipher) :-
+	% convert char-list to atom
 	atom_codes(X, Cipher),
+	% convert atom to use all small letter
 	atom_uplow(X, AtomCipher),
+	% check a word from the dictionary
 	word(Word),
+	% check if the cipher is included in the dictionary
 	Word == AtomCipher,!.
-	
-first_word([32|T], Word):-
-	Word = [].
-	
-first_word([H|T], Word):-
-	first_word(T, X),
-	Word = [H|X].
 
-next_word([], Word, Rest):-
-	Word = [], Rest = [].
+/** Next_word
+* Desc: Extract the next word from the text
+* Input: Whole text
+* Output: Word: the first word in the text, Rest: text without the first word
+*/
+next_word([], Word-[], []).
 	
-next_word([32|T], Word, Rest):-
-	Word = [], Rest = T.
+next_word([H|T], Word-[], T):- is_sign(H).
 	
-next_word([H|T], Word, Rest):-
-		next_word(T, X, Rest), Word = [H|X].
+next_word([H|T], Word-Z, Rest):-
+		add(Word-Z, [H|Z2]-Z2, Result),!,
+		next_word(T, Result, Rest).
 
-remove_signs([H], Word):-
-	(
-		is_sign(H) -> Word = [];		
-		Word = [H]
-	).
-
-remove_signs([H|T], Word):-
-	remove_signs(T, Result),
-	(
-		is_sign(H) -> Word = Result;		
-		Word = [H|Result]
-	).
+/** Remove_signs
+* Desc: Remove signs until next letter from the text
+* Input: Whole text
+* Output: Rest: text that start with a letter
+*/
+remove_signs([], []).
 	
+remove_signs([H|T], [H|T]):- not(is_sign(H)).
+	
+remove_signs([H|T], Rest):-
+		remove_signs(T, Rest),!.
+
 	

@@ -1,3 +1,9 @@
+/**
+* Author: Jens Bergman
+* Date: 2015-09-27
+* Course: ID2213, logic programming
+* Info: This file have all encrypting procedures for a known key.
+*/
 
 % test of encryption enc_solution(3, "All zebras can run, (when they are alive)!", X).
 enc_solution(Key, Sentence, Cipher) :-
