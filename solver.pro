@@ -58,7 +58,7 @@ solver(Cipher, Result):-
 test_keys([], Cipher, Key):- 
 	% this is used becuase if the user initialize the Key, we must say that this is the wrong  
 	% key. Here we have checked all keys and all was the wrong solution.
-	var(Key). 
+	!, var(Key). 
 	
 
 test_keys([H|T], Cipher, Key) :-
@@ -74,7 +74,7 @@ test_keys([H|T], Cipher, Key) :-
 * Input: Key: key used for deciphering, Cipher: cipher text
 * Output: the procedure results in either true or false
 */
-test_all(Key, []).
+test_all(Key, []):- !.
 		
 test_all(Key, Cipher) :-
 	next_word(Cipher, Next_word-Next_word, Rest),
@@ -93,7 +93,7 @@ test_all(Key, Cipher) :-
 brute_force(Cipher, Result):-
 	brute_force(Cipher,1, Result-Result).
 	
-brute_force(Cipher,26, Result-[]):- !.
+brute_force(Cipher,26, Z):- !, Z=Result-[].
 	
 brute_force(Cipher,Key, Result-Z):-
 

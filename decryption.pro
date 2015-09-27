@@ -25,7 +25,7 @@ dec_solution(Key, Cipher, Result) :-
 decrypt(Key, Cipher, Result):-
 	decrypt_dl(Key, Cipher, Result-Result).
 
-decrypt_dl(Key, [], Sentence-[]).
+decrypt_dl(Key, [], Z):- !, Z=Sentence-[].
 
 decrypt_dl(Key, [H|T], Sentence-Z):-
 	% decrypt 
@@ -42,11 +42,11 @@ dec_roll_back(Cipher, Letter, Result) :-
 		
 	( 
 		% if space
-		is_sign(Cipher) -> Result = Cipher;
+		is_sign(Cipher) -> !,Result = Cipher;
 		% else is over Z
-		Letter < 65, Cipher >= 65 ->  Result is Letter+26;
+		Letter < 65, Cipher >= 65 ->  !,Result is Letter+26;
 		% else is over z
-		Letter < 97, Cipher >= 97 -> Result is Letter+26;
+		Letter < 97, Cipher >= 97 -> !,Result is Letter+26;
 		% else
 		Result = Letter
 	).
