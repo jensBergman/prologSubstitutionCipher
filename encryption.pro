@@ -31,8 +31,8 @@ encrypt_dl(Key, [H|T], Cipher-Z):-
 enc_roll_back(Letter, Cipher, Result) :-
 		
 	( 
-		% if space
-		is_sign(Letter) -> Result = Letter;
+		% if sign
+		not(is_letter(Letter)) -> Result = Letter;
 		% else is over Z
 		Cipher > 90, Letter =< 90 ->  Result is Cipher-26;
 		% else is over z

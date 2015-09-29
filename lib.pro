@@ -11,27 +11,13 @@ add(A-B, B-C, A-C).
 % check if a letter is a valid input
  is_letter(Letter) :-
  	( 
-		% if sign
-		is_sign(Letter) -> true;
-		% Capital letters
+		% if capital letters
 		Letter < 91, Letter > 64 ->  true;
 		% small letters
 		Letter > 96, Letter < 123 -> true;
 		% else
-		write("Text include invalid chars! This program only deals with letters, spaces and punctuation"), nl, false
-	).
-
-% true if Sign is a sign
-is_sign(Sign) :-
- 	( 
-		% signs
-		Sign < 65 -> true;
-		Sign > 122 ->  true;
-		Sign < 97, Sign > 90 -> true;
-		% else
 		false
 	).
-
 	
 % check if the word exist by looking in the dictionary
 word_exists(Cipher) :-
@@ -51,7 +37,7 @@ word_exists(Cipher) :-
 */
 next_word([], Word-[], []):- !.
 	
-next_word([H|T], Word-[], Z):- is_sign(H), !, Z=T.
+next_word([H|T], Word-[], Z):- not(is_letter(H)), !, Z=T.
 	
 next_word([H|T], Word-Z, Rest):-
 		add(Word-Z, [H|Z2]-Z2, Result),!,
@@ -64,9 +50,26 @@ next_word([H|T], Word-Z, Rest):-
 */
 remove_signs([], []):- !.
 	
-remove_signs([H|T], Z):- not(is_sign(H)), !, Z = [H|T].
+remove_signs([H|T], Z):- is_letter(H), !, Z = [H|T].
 	
 remove_signs([H|T], Rest):-
 		remove_signs(T, Rest),!.
 
 	
+time_difference(time(H1,M1,S1), time(H2,M2,S2),
+      [hours(H), mins(M), secs(S)] ) :-
+   H3 is H1 - H2,
+   M3 is M1 - M2,
+   S3 is S1 - S2,
+   (S3 < 0 ->
+      M4 is M3 - 1,
+      S is S3 + 60
+      ;
+      M4 = M3,
+      S = S3),
+   (M4 < 0 ->
+      M is M4 + 60,
+      H is H3 - 1
+      ;
+      H = H3,
+      M = M4).

@@ -6,20 +6,22 @@
 */
 
 /**
-* test 1 (key 1): solv_solution("Bmm afcsbt dbo svo, (xifo uifz bsf bmjwf)!").
-* test 2 (key 3): solv_solution("Doo cheudv fdq uxq, (zkhq wkhb duh dolyh)!").
-* test 3 (key 25): solv_solution("Zkk ydaqzr bzm qtm, (vgdm sgdx zqd zkhud)!").
+* test 1 (key 1): solv_cipher("Bmm afcsbt dbo svo, (xifo uifz bsf bmjwf)!").
+* test 2 (key 3): solv_cipher("Doo cheudv fdq uxq, (zkhq wkhb duh dolyh)!").
+* test 3 (key 25): solv_cipher("Zkk ydaqzr bzm qtm, (vgdm sgdx zqd zkhud)!").
 */
 
 /** automatic solver for monoalphabetic ciphers
 * Desc: use this to get the plain text printed out
 * Input: Cipher: this is the encoded text (char list)
 */
-solv_solution(Cipher) :-
+solv_cipher(Cipher) :-
+	
 	% find the key to the cipher
 	solver(Cipher, Key),
 	% decrypt the text with the found key
 	decrypt(Key, Cipher, Sentence),
+
 	% print out the result
 	string_list(Print, Sentence),
 	write('The cipher is: '), write(Cipher), nl,

@@ -41,8 +41,8 @@ decrypt_dl(Key, [H|T], Sentence-Z):-
 dec_roll_back(Cipher, Letter, Result) :-
 		
 	( 
-		% if space
-		is_sign(Cipher) -> Result = Cipher;
+		% if sign
+		not(is_letter(Cipher)) -> Result = Cipher;
 		% else is over Z
 		Letter < 65, Cipher >= 65 ->  Result is Letter+26;
 		% else is over z
