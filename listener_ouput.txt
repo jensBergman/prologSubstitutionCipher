@@ -1,1 +1,1 @@
-user:test_keys([3, 4], "Doo cheudv fdq uxq, (zkhq wkhb duh dolyh)!", H215)
+user:solv_cipher("Doo cheudv fdq uxq, (zkhq wkhb duh dolyh)!")
